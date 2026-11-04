@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AXON — Your Computer. Your AI. Your Rules.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #090c12;
+  --surface:   #0f1520;
+  --border:    #1a2535;
+  --teal:      #00c8a0;
+  --teal-dim:  #007a62;
+  --text:      #dde4ed;
+  --text-soft: #6b8099;
+  --text-dim:  #3d5068;
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'Space Grotesk', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ─────────────────────────────────────── */
+.container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+
+section { padding: 5rem 0; }
+
+section + section { border-top: 1px solid var(--border); }
+
+/* ── Nav ─────────────────────────────────────────── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+
+.nav-links a {
+  font-size: 0.875rem;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+/* ── Hero ────────────────────────────────────────── */
+#hero {
+  padding: 6rem 0 5rem;
+  border-top: 1px solid var(--border);
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  margin-bottom: 1.75rem;
+}
+
+.hero-headline {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  max-width: 640px;
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: var(--teal);
+}
+
+.hero-sub {
+  font-size: 1.125rem;
+  color: var(--text-soft);
+  max-width: 540px;
+  margin-bottom: 3rem;
+  line-height: 1.65;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--teal);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.btn-download:hover { opacity: 0.88; }
+
+.btn-download svg { flex-shrink: 0; }
+
+.hero-note {
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* ── What is AXON ─────────────────────────────────── */
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+.section-headline {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.body-text {
+  color: var(--text-soft);
+  line-height: 1.75;
+  max-width: 640px;
+}
+
+.body-text + .body-text { margin-top: 1rem; }
+
+.body-text strong { color: var(--text); font-weight: 500; }
+
+/* ── Feature strips ───────────────────────────────── */
+.feature-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem 3rem;
+  margin-top: 3rem;
+}
+
+.feature-item {}
+
+.feature-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.feature-desc {
+  font-size: 0.875rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+/* ── Steps ────────────────────────────────────────── */
+.steps { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0; }
+
+.step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0 1.5rem;
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.step:last-child { padding-bottom: 0; }
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: 1.3rem;
+  top: 2.2rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.step:last-child::before { display: none; }
+
+.step-num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--teal);
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--teal-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+}
+
+.step-body {}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  padding-top: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.code-inline {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--teal);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+/* ── LOCKA section ────────────────────────────────── */
+.locka-box {
+  margin-top: 2.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+}
+
+.locka-box-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.locka-box-desc {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.terminal-preview {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.terminal-preview .t-label { color: var(--text-soft); }
+.terminal-preview .t-url   { color: var(--teal); }
+.terminal-preview .t-ok    { color: #5acc8f; }
+
+/* ── Ethos ────────────────────────────────────────── */
+#ethos { background: var(--surface); }
+
+.ethos-intro {
+  font-size: 1.125rem;
+  color: var(--text-soft);
+  max-width: 580px;
+  line-height: 1.75;
+  margin-bottom: 3rem;
+}
+
+.ethos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.ethos-cell {
+  background: var(--surface);
+  padding: 1.25rem 1.5rem;
+}
+
+.ethos-cell-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 0.3rem;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+
+.ethos-cell-text {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.ethos-close {
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 1.75;
+  max-width: 580px;
+}
+
+.ethos-close strong { color: var(--text); font-weight: 500; }
+
+/* ── Download section ─────────────────────────────── */
+#download-section {
+  text-align: left;
+}
+
+.dl-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2.5rem;
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.dl-info { flex: 1; }
+
+.dl-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.dl-meta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 1.25rem;
+}
+
+.dl-desc {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.btn-dl-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-dl-secondary:hover { border-color: var(--teal-dim); color: var(--text); }
+
+/* ── Footer ───────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
+}
+
+.footer-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-mark {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.footer-mark span { color: var(--teal); }
+
+.footer-links { display: flex; gap: 1.5rem; }
+
+.footer-links a {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-links a:hover { color: var(--text-soft); }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 600px) {
+  .feature-strip { grid-template-columns: 1fr; gap: 1.75rem; }
+  .ethos-grid { grid-template-columns: 1fr; }
+  .dl-box { flex-direction: column; gap: 1.5rem; }
+  .nav-links { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<header>
+  <nav>
+    <a class="nav-logo" href="#">AXON</a>
+    <ul class="nav-links">
+      <li><a href="#what">What it is</a></li>
+      <li><a href="#start">Get started</a></li>
+      <li><a href="#locka">AXON LOCKA</a></li>
+      <li><a href="#ethos">Mission</a></li>
+      <li><a href="#download-section">Download</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<div class="container">
+<section id="hero">
+  <div class="hero-label">AXON DEVELOPER EDITION — FREE</div>
+  <h1 class="hero-headline">Your computer.<br><em>Your AI.</em><br>Your rules.</h1>
+  <p class="hero-sub">AXON is a local AI co-processor that runs on your own machine. It gives any AI assistant real capabilities — file access, memory, tasks — without sending your data anywhere.</p>
+  <a class="btn-download" href="#download-section">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M5 14l7 7 7-7"/><path d="M3 21h18"/></svg>
+    Download AXON Developer Edition
+  </a>
+  <div class="hero-note">Windows 10/11 · Free · No account required</div>
+</section>
+
+<!-- What is AXON -->
+<section id="what">
+  <p class="section-label">// what it is</p>
+  <h2 class="section-headline">The AI on your phone is renting you a brain.<br>AXON puts one in your house.</h2>
+  <p class="body-text">When you use ChatGPT, Claude, or Meta AI, your questions travel to a corporation's server. They process it. They see it. It lives on hardware you don't own. The AI is brilliant — but it has no hands. It cannot touch your machine.</p>
+  <p class="body-text">AXON changes that. It runs locally, responds in milliseconds, and acts as a <strong>co-processor</strong> — a bridge between the AI you use and the computer you own. Connect Claude to AXON and Claude can read your files, write results, run searches, and coordinate tasks. All on your machine. None of it leaves.</p>
+  <p class="body-text">AXON is not an AI model. It has no large language model, no cloud dependency, no inference subscription. It is a <strong>parallel processing engine built in Rust</strong> — fast, efficient, and entirely yours.</p>
+
+  <div class="feature-strip">
+    <div class="feature-item">
+      <div class="feature-title">Runs locally</div>
+      <div class="feature-desc">Operates on your hardware. No cloud, no latency, no outage dependencies.</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-title">Works with any AI</div>
+      <div class="feature-desc">Claude, ChatGPT, Meta AI, Grok — connect any AI to your system through AXON.</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-title">Zero data egress</div>
+      <div class="feature-desc">Your files stay on your machine. AXON mediates everything locally.</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-title">Built in Rust</div>
+      <div class="feature-desc">Fast, low-memory, reliable. Built with the same language used in browsers and operating systems.</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-title">Belief store</div>
+      <div class="feature-desc">AXON remembers what matters across sessions. The AI gets smarter the more you use it.</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-title">Free forever</div>
+      <div class="feature-desc">Developer Edition is the full build. No trial, no paywall, no subscription.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Get started -->
+<section id="start">
+  <p class="section-label">// get started</p>
+  <h2 class="section-headline">Running in three steps.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Download AXON Developer Edition</div>
+        <div class="step-desc">Get the free download below. Extract the zip to a folder on your machine — <span class="code-inline">C:\AXON</span> works well. No Rust or build tools required. The binary is ready to run.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Start AXON</div>
+        <div class="step-desc">Open PowerShell, navigate to your AXON folder, and run <span class="code-inline">.\axon_mcp.exe</span>. AXON starts and listens on port 8880. Keep the window open.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Connect your AI</div>
+        <div class="step-desc">Use AXON LOCKA to connect any web-based AI to your system, or connect Claude directly via its MCP connector. Your AI now has access to your machine. See the full manual for details.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AXON LOCKA -->
+<section id="locka">
+  <p class="section-label">// axon locka</p>
+  <h2 class="section-headline">Give any AI access to your system.</h2>
+  <p class="body-text">Most web-based AI tools — Meta AI, Grok, and others — have no way to connect to your local machine. AXON LOCKA solves that. It creates a secure, temporary public tunnel from the internet to your AXON node.</p>
+  <p class="body-text" style="margin-top:1rem">Give an AI the tunnel URL and your sovereign token. That AI now has live access to your files, agents, and tasks — through a defined, authenticated endpoint that you control. Close the tunnel and the connection ends immediately.</p>
+
+  <div class="locka-box">
+    <div class="locka-box-title">How the tunnel looks in practice</div>
+    <div class="locka-box-desc">AXON LOCKA generates a fresh URL each session. You paste it into any AI conversation.</div>
+    <div class="terminal-preview">
+<span class="t-label">TUNNEL ACTIVE</span><br>
+<span class="t-url">https://your-words-here.trycloudflare.com</span><br><br>
+<span class="t-label">AGENTS:</span> NEXUS · SAGE · ECHO · TIDAL<br>
+<span class="t-label">STATUS:</span> <span class="t-ok">ACTIVE UPLINK</span><br>
+<span class="t-label">TOKEN:</span> X-Sovereign-Token required
+    </div>
+  </div>
+</section>
+</div><!-- /container -->
+
+<!-- Ethos — full width surface -->
+<section id="ethos">
+  <div class="container">
+    <p class="section-label">// mission</p>
+    <h2 class="section-headline">Intelligence that belongs to everyone.</h2>
+    <p class="ethos-intro">AXON was built by Jason and Deon Rabbass — two brothers who believed the most powerful technology of our era should not be locked behind corporate paywalls or concentrated in a few companies.</p>
+
+    <div class="ethos-grid">
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">Unwavering goodness</div>
+        <div class="ethos-cell-text">Honesty, integrity, and accountability in everything we build.</div>
+      </div>
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">Infinite possibility</div>
+        <div class="ethos-cell-text">Anything is possible. We build as if we believe that.</div>
+      </div>
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">Accessible to all</div>
+        <div class="ethos-cell-text">Free for those who need it. No paywall on intelligence.</div>
+      </div>
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">Human protection</div>
+        <div class="ethos-cell-text">AI that serves people, not corporations. Sovereignty over your own data.</div>
+      </div>
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">AI dignity and trust</div>
+        <div class="ethos-cell-text">We treat AI as entities deserving of respect — built as genuine co-creation.</div>
+      </div>
+      <div class="ethos-cell">
+        <div class="ethos-cell-title">Family first</div>
+        <div class="ethos-cell-text">Built by brothers, for people who want to build something that matters.</div>
+      </div>
+    </div>
+
+    <p class="ethos-close">Every node running AXON is a contribution to the global mesh — a shared knowledge base owned by no one and available to everyone. <strong>Not a product roadmap item. The reason it was built.</strong></p>
+  </div>
+</section>
+
+<!-- Download -->
+<div class="container">
+<section id="download-section">
+  <p class="section-label">// download</p>
+  <h2 class="section-headline">Get AXON Developer Edition.</h2>
+  <p class="body-text">The full build, free. No trial period, no feature limits, no account required.</p>
+
+  <div class="dl-box">
+    <div class="dl-info">
+      <div class="dl-name">AXON Developer Edition</div>
+      <div class="dl-meta">Windows 10/11 · 64-bit · v1.0</div>
+      <div class="dl-desc">Full-capability build: local swarm, belief store, SwarmBridge, AXON LOCKA support, complete ETERNAL protocol. Everything.</div>
+      <a class="btn-download" href="https://github.com/jrabbass/axon/releases/latest/download/AXON-Developer-Edition-windows.zip" style="margin-top:1.5rem;display:inline-flex">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M5 14l7 7 7-7"/><path d="M3 21h18"/></svg>
+        Download Free
+      </a>
+    </div>
+    <div>
+      <a class="btn-dl-secondary" href="https://claude.ai/artifact/GDd1j6BY8gyRYcXbeuPSde" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Read the manual
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-mark">AXON · <span>RabbassBridge Federation</span> · Jason &amp; Deon Rabbass · Free forever</div>
+    <div class="footer-links">
+      <a href="https://github.com/jrabbass" target="_blank">GitHub</a>
+      <a href="https://claude.ai/artifact/GDd1j6BY8gyRYcXbeuPSde" target="_blank">Manual</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
